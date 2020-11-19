@@ -1,3 +1,4 @@
+console.log(localStorage)
 // Book Class: Represents a book
 class Book {
     constructor(title, author, isbn) {
@@ -11,8 +12,7 @@ class Book {
 class UI {
     static displayBooks() {
       const books = Store.getBooks();
-  
-      books.forEach((book) => UI.addBookToList(book));
+    books.forEach((book) => UI.addBookToList(book));
     }
 
     static addBookToList(book) {
@@ -56,6 +56,7 @@ class UI {
 
 //Store Class: Handles storage
 class Store {
+
     static getBooks() {
         let books;
         if(localStorage.getItem('books')=== null) {
@@ -63,11 +64,15 @@ class Store {
         } else {
             books = JSON.parse(localStorage.getItem('books'));
         }
+
+        return books
     }
+
+    
 
     static addBook(book) {
         const books = Store.getBooks();
-        books.push(books);
+        books.push(book);
         localStorage.setItem('books', JSON.stringify(books));
     }
 
@@ -121,7 +126,7 @@ document.querySelector('#book-form').addEventListener('submit', (e) => {e.preven
 //Event: Remove a book
 document.querySelector('#book-list').addEventListener('click', (e) => {
     //Remove book from UI
-    UI.deleteBook(e.target)
+    UI.deleteBook(e.target);
 
     //Remove book from store
     Store.removeBook(e.target.parentElement.previousElementSibling.textContent);
